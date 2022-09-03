@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar";
+import Diary from "./components/Diary";
+import PlusBttn from "./components/PlusBttn";
+import Form from "./components/Form";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+import { useDispatch } from "react-redux";
+import { getPosts } from "./actions/posts";
+export default function App() {
+
+  const [currentId, setCurrentId] = useState(0);
+console.log(currentId, "this is currentId in App.js");
+    const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [currentId, dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Diary setCurrentId={setCurrentId} />
+      <PlusBttn />
+      <Form currentId={currentId} setCurrentId={setCurrentId} />
+    </>
   );
 }
-
-export default App;
